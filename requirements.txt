@@ -1,0 +1,3 @@
+aiida_core>=1.4.4
+lorem>=0.1.1
+numpy
