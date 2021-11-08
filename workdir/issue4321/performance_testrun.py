@@ -12,9 +12,8 @@
 # > ea3a697ee1e153f10881ec6a70e6d0b1d67cb9b2
 #
 ################################################################################
-
-import click
 import time
+import click
 import subprocess
 
 from aiida_toolbox_ffr.populators.folderdata import populatedb_folderdata
@@ -113,14 +112,14 @@ def test_run(test_parameters):
     # Pack files
     print(f'\n > Now packing the nodes...')
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--pack'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--pass-down "-repack -clean"'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' > Elapsed time (pack): {t1_stops-t1_start}')
     print_repobase_stats()
 
     print(f'\n > Now packing the nodes...')
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--pack'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--pass-down "-repack -clean"'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' > Elapsed time (pack): {t1_stops-t1_start}')
     print_repobase_stats()
@@ -148,14 +147,14 @@ def test_run(test_parameters):
     # Repack files
     print(f'\n > Now repacking nodes...')
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--repack'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--pass-down "-pack -clean"'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' > Elapsed time: {t1_stops-t1_start}')
     print_repobase_stats()
 
     print(f'\n > Now repacking nodes...')
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--repack'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--pass-down "-pack -clean"'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' > Elapsed time: {t1_stops-t1_start}')
     print_repobase_stats()
@@ -170,15 +169,15 @@ def test_run(test_parameters):
 ################################################################################
 def perform_full_cleanup():
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--transmit'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--live'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' >>> Elapsed time (transmit): {t1_stops-t1_start}')
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--clean'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--pass-down "-pack -repack -vacuum"'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' >>> Elapsed time (clean): {t1_stops-t1_start}')
     t1_start = time.perf_counter()
-    command = subprocess.run(['verdi', 'repository', 'maintain', '--vacuum'], capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain', '--pass-down "-pack -repack"'], capture_output=True, input="y")
     t1_stops = time.perf_counter()
     print(f' >>> Elapsed time (vacuum): {t1_stops-t1_start}')
 
@@ -211,8 +210,7 @@ def setup_repository(setup_dict):
     print(f' >>> Deleting all nodes...')
     delete_database_proportion(1.0)
     print(f' >>> Cleaning up database and repository...')
-    command_list = ['verdi', 'repository', 'maintain', '--transmit', '--repack', '--clean', '--vacuum']
-    command = subprocess.run(command_list, capture_output=True)
+    command = subprocess.run(['verdi', 'repository', 'maintain'], capture_output=True, input="y")
 
     #if path.exists(source0_repopath):
     #    print(f' >>> Existing source directory found: {source0_repopath}')
