@@ -3,6 +3,7 @@
 #
 ################################################################################
 def delete_database_proportion( fraction=0.0 ):
+    """Description pending"""
     from random import shuffle
     from aiida import orm
     from aiida.tools import delete_nodes

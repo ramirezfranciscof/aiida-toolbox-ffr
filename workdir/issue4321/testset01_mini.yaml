@@ -1,3 +1,10 @@
 # Description
 #
-
+initial_repository:
+  nt_nodes: 100
+  av_files: 5
+  sd_files: 1
+  av_fsize: 100
+  sd_fsize: 10
+delete_unpacked: 0.25
+delete_packed: 0.33

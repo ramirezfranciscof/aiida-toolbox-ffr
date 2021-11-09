@@ -2,6 +2,8 @@
 #
 #
 ################################################################################
+from tqdm import tqdm
+
 def populatedb_folderdata(**kwargs):
     import lorem
     from numpy import random
@@ -19,7 +21,7 @@ def populatedb_folderdata(**kwargs):
 
     # Generating instruction set
     node_filelist = []
-    for k_node in range(nt_nodes):
+    for k_node in tqdm(range(nt_nodes)):
 
         nt_files = max( 1, int(random.normal(av_files,sd_files)) )
         node_files = {}
@@ -35,14 +37,14 @@ def populatedb_folderdata(**kwargs):
 
         node_filelist.append(deepcopy(node_files))
         counter = len(node_filelist)
-        if counter % 100 == 0:
-            print(counter)
+        #if counter % 100 == 0:
+        #    print(counter)
         #print()
         #print(node_filelist)
 
     # Storing actual data
     counter = 0
-    for node_files in node_filelist:
+    for node_files in tqdm(node_filelist):
         
         counter = counter + 1
         data_node = orm.FolderData()
@@ -60,9 +62,9 @@ def populatedb_folderdata(**kwargs):
         
         #print(data_node)
         data_node.store()
-        if counter % 100 == 0:
-            print(counter)
-        print(data_node)
+        #if counter % 100 == 0:
+        #    print(counter)
+        #print(data_node)
         #print()
 
     return output_dict

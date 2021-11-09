@@ -1,0 +1,10 @@
+# Description
+#
+#        setup_repository = {
+#            'nt_nodes': 200,
+#            'av_files': 5,
+#            'sd_files': 2,
+#            'av_fsize': 1024*10,
+#            'sd_fsize': 1024*3,
+#        }
+
